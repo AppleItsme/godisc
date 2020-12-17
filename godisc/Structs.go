@@ -3,9 +3,9 @@ package godisc
 //Overwrite object
 type Overwrite struct {
 	ID string `json:"id"`
-	Type int `json:"type"`
-	Allow string `json:"allow"`
-	Deny string `json:"deny"`
+	Type string `json:"type"`
+	Allow int `json:"allow"`
+	Deny int `json:"deny"`
 }
 
 //Channel object
@@ -14,7 +14,7 @@ type Channel struct{
 	Type int `json:"type"`
 	GuildID string `json:"guild_id`
 	Position int `json:"position"`
-	PermissionOverwrites Overwrite `json:"permission_overwrites"`
+	PermissionOverwrites []Overwrite `json:"permission_overwrites"`
 	Name string `json:"name"`
 	Topic string `json:"topic"`
 	Nsfw bool `json:"nsfw"`
@@ -528,3 +528,91 @@ type Webhook struct {
 	Token string `json:"token"`
 	ApplicationID string `json:"application_id"`
 }
+
+type AuditLog struct {
+	Webhooks []Webhook `json:"webhooks"`
+	Users []User `json:"users"`
+	AuditLogEntries []AuditLogEntry `json:"audit_log_entries"`
+	Integrations []Integration `json:"integrations"`
+}
+
+type AuditLogEntry struct {
+	TargetID string `json:"target_id"`
+	Changes []AuditLogChange `json:"changes"`
+	UserID string `json:"user_id"`
+	ID string `json:"id"`
+	ActionType int `json:"action_type"`
+	Options OptionalAuditEntry `json:"options"`
+	Reason string `json:"reason"`
+}
+
+type OptionalAuditEntry struct {
+	DeleteMemberDays string `json:"delete_member_days"`
+	MembersRemoved string `json:"memebers_removed"`
+	ChannelID string `json:"channel_id"`
+	MessageID string `json:"message_id"`
+	Count string `json:"count"`
+	ID string `json:"id"`
+	Type string `json:"type"`
+	RoleName string `json:"role_name"`
+}
+
+type AuditLogChange struct {
+	NewValue interface{}        `json:"new_value"`
+	OldValue interface{}        `json:"old_value"`
+	Key      *AuditLogChangeKey `json:"key"`
+}
+
+
+type AuditLogChangeKey string
+
+// Block of valid AuditLogChangeKey
+const (
+	AuditLogChangeKeyName                       AuditLogChangeKey = "name"
+	AuditLogChangeKeyIconHash                   AuditLogChangeKey = "icon_hash"
+	AuditLogChangeKeySplashHash                 AuditLogChangeKey = "splash_hash"
+	AuditLogChangeKeyOwnerID                    AuditLogChangeKey = "owner_id"
+	AuditLogChangeKeyRegion                     AuditLogChangeKey = "region"
+	AuditLogChangeKeyAfkChannelID               AuditLogChangeKey = "afk_channel_id"
+	AuditLogChangeKeyAfkTimeout                 AuditLogChangeKey = "afk_timeout"
+	AuditLogChangeKeyMfaLevel                   AuditLogChangeKey = "mfa_level"
+	AuditLogChangeKeyVerificationLevel          AuditLogChangeKey = "verification_level"
+	AuditLogChangeKeyExplicitContentFilter      AuditLogChangeKey = "explicit_content_filter"
+	AuditLogChangeKeyDefaultMessageNotification AuditLogChangeKey = "default_message_notifications"
+	AuditLogChangeKeyVanityURLCode              AuditLogChangeKey = "vanity_url_code"
+	AuditLogChangeKeyRoleAdd                    AuditLogChangeKey = "$add"
+	AuditLogChangeKeyRoleRemove                 AuditLogChangeKey = "$remove"
+	AuditLogChangeKeyPruneDeleteDays            AuditLogChangeKey = "prune_delete_days"
+	AuditLogChangeKeyWidgetEnabled              AuditLogChangeKey = "widget_enabled"
+	AuditLogChangeKeyWidgetChannelID            AuditLogChangeKey = "widget_channel_id"
+	AuditLogChangeKeySystemChannelID            AuditLogChangeKey = "system_channel_id"
+	AuditLogChangeKeyPosition                   AuditLogChangeKey = "position"
+	AuditLogChangeKeyTopic                      AuditLogChangeKey = "topic"
+	AuditLogChangeKeyBitrate                    AuditLogChangeKey = "bitrate"
+	AuditLogChangeKeyPermissionOverwrite        AuditLogChangeKey = "permission_overwrites"
+	AuditLogChangeKeyNSFW                       AuditLogChangeKey = "nsfw"
+	AuditLogChangeKeyApplicationID              AuditLogChangeKey = "application_id"
+	AuditLogChangeKeyRateLimitPerUser           AuditLogChangeKey = "rate_limit_per_user"
+	AuditLogChangeKeyPermissions                AuditLogChangeKey = "permissions"
+	AuditLogChangeKeyColor                      AuditLogChangeKey = "color"
+	AuditLogChangeKeyHoist                      AuditLogChangeKey = "hoist"
+	AuditLogChangeKeyMentionable                AuditLogChangeKey = "mentionable"
+	AuditLogChangeKeyAllow                      AuditLogChangeKey = "allow"
+	AuditLogChangeKeyDeny                       AuditLogChangeKey = "deny"
+	AuditLogChangeKeyCode                       AuditLogChangeKey = "code"
+	AuditLogChangeKeyChannelID                  AuditLogChangeKey = "channel_id"
+	AuditLogChangeKeyInviterID                  AuditLogChangeKey = "inviter_id"
+	AuditLogChangeKeyMaxUses                    AuditLogChangeKey = "max_uses"
+	AuditLogChangeKeyUses                       AuditLogChangeKey = "uses"
+	AuditLogChangeKeyMaxAge                     AuditLogChangeKey = "max_age"
+	AuditLogChangeKeyTempoary                   AuditLogChangeKey = "temporary"
+	AuditLogChangeKeyDeaf                       AuditLogChangeKey = "deaf"
+	AuditLogChangeKeyMute                       AuditLogChangeKey = "mute"
+	AuditLogChangeKeyNick                       AuditLogChangeKey = "nick"
+	AuditLogChangeKeyAvatarHash                 AuditLogChangeKey = "avatar_hash"
+	AuditLogChangeKeyID                         AuditLogChangeKey = "id"
+	AuditLogChangeKeyType                       AuditLogChangeKey = "type"
+	AuditLogChangeKeyEnableEmoticons            AuditLogChangeKey = "enable_emoticons"
+	AuditLogChangeKeyExpireBehavior             AuditLogChangeKey = "expire_behavior"
+	AuditLogChangeKeyExpireGracePeriod          AuditLogChangeKey = "expire_grace_period"
+)
