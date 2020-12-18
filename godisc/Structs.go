@@ -8,6 +8,35 @@ type Overwrite struct {
 	Deny int `json:"deny"`
 }
 
+const (
+	TextChannel int = iota
+	DM int = iota
+	GuildVoice int = iota
+	GroupDM int = iota
+	Category int = iota
+	News int = iota
+	Store int = iota
+)
+
+type ChannelEdit struct {
+	Name                 string                 `json:"name,omitempty"`
+	Topic                string                 `json:"topic,omitempty"`
+	Nsfw                 bool                   `json:"nsfw,omitempty"`
+	Position             int                    `json:"position"`
+	Bitrate              int                    `json:"bitrate,omitempty"`
+	UserLimit            int                    `json:"user_limit,omitempty"`
+	PermissionOverwrites []Overwrite `json:"permission_overwrites,omitempty"`
+	ParentID             string                 `json:"parent_id,omitempty"`
+	SlowDownTime     int                    `json:"rate_limit_per_user,omitempty"`
+}
+
+type GetMessagesParams struct {
+	Around string `json:"around,omitempty"`
+	Before string `json:"before,omitempty"`
+	After string `jso:"after,omitempty"`
+	Limit int `json:"limit,omitempty"`
+}
+
 //Channel object
 type Channel struct{
 	ID string `json:"id"`
@@ -30,18 +59,6 @@ type Channel struct{
 	LastPinTime string `json:"last_pin_timestamp"`
 }
 
-type ChannelEdit struct {
-	Name string `json:"name"`
-	Type int `json:"type"`
-	Position int `json:"position"`
-	Topic string `json:"topic"`
-	Nsfw bool `json:"nsfw"`
-	SlowDownTime int `json:"rate_limit_per_user"`
-	Bitrate int `json:"bitrate"`
-	UserLimit int `json:"user_limit"`
-	PermissionOverwrites Overwrite `json:"permission_overwrites"`
-	ParentID string `json:"parent_id"`
-}
 
 type User struct {
 	ID string `json:"id"`
@@ -111,6 +128,32 @@ type Embed struct {
 	Author EmbedAuthor `json:"author"`
 	Fields []EmbedField `json:"fields"`
 }
+
+const (
+	Default int = 0
+	Aqua  int = 1752220
+	Green  int = 3066993
+	Blue  int = 3447003
+	Purple int = 10181046
+	Gold  int = 15844367
+	Orange  int = 15105570
+	Grey  int = 9807270
+	Red  int = 15158332
+	Navy  int = 3426654
+	DarkerGrey  int = 8359053
+	DarkGreen  int = 2067276
+	DarkBlue  int = 2123412
+	DarkPurple int = 7419530
+	DarkGold  int = 12745742
+	DarkOrange  int = 11027200
+	DarkRed  int = 10038562
+	DarkGrey  int = 9936031
+	LIGHTGrey  int = 12370112
+	DarkNavy  int = 2899536
+	LuminousVividPink  int = 16580705
+	DarkVividPink  int = 12320855
+	DarkAqua  int = 1146986
+)
 //EmbedFooter is that little text below all the things in Embed object
 type EmbedFooter struct {
 	Text string `json:"text"`
@@ -207,6 +250,15 @@ type Message struct {
 	Flags int `json:"flags"`
 	Stickers []MessageSticker `json:"stickers"`
 	ReferencedMessage MessageReference `json:"referenced_message"`
+}
+
+type MessageSend struct {
+	Text string `json:"content"`
+	Nonce string  `json:"nonce"`
+	TTS bool  `json:"tts"`
+	Embed Embed  `json:"embed"`
+	MentionsAllowed AllowedMentions `json:"allowed_mentions"` 
+	MessageReply MessageReference `json:"message_reference"`
 }
 
 type GuildMember struct {

@@ -1,6 +1,7 @@
 package godisc
 
 import (
+	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -22,17 +23,22 @@ func DebugHttp(resp *http.Response) {
 	}
 }
 
-func SendRequest(method string, URL string, body io.Reader, Headers map[string]string) (*http.Response, error) {
+
+func SendRequest(method string, URL string, body io.Reader, token string, contentType string) (*http.Response, error) {
 	client := &http.Client{}
-	req, err := http.NewRequest("GET", URL, body)
+	req, err := http.NewRequest(method, URL, body)
 
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Add("Authorization", fmt.Sprintf("Bot %s", token))
+	req.Header.Add("Accept", "*/*")
+	req.Header.Add("Host", "discord.com")
+	req.Header.Add("Connection", "keep-alive")
+	req.Header.Add("Cookie", "__cfduid=d96c2d0da92ad05bf4370ef7a3065dedf1607773551")
+	req.Header.Add("User-Agent", fmt.Sprintf("Applandia/%s", Version))
+	req.Header.Add("Content-Type", contentType)
 
-	for key, value := range Headers {
-		req.Header.Add(key, value)
-	}
 	resp, err := client.Do(req)
 	return resp, err
 }
